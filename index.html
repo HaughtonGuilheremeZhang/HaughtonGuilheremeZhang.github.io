@@ -2,18 +2,130 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>Chatbox - 连接大模型</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI 聊天机器人</title>
   <style>
-    /* 这里保持和之前的样式一致，省略 */
-    /* ... 保持原有样式不变 ... */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #eef2f3, #8e9eab);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chatbox-container {
+      width: 450px;
+      max-width: 95%;
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+    }
+
+    .chatbox-header {
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      color: white;
+      padding: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chatbox-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      min-height: 400px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 24px;
+      line-height: 1.5;
+      word-break: break-word;
+      font-size: 15px;
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background-color: #007bff;
+      color: white;
+      border-bottom-right-radius: 8px;
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background-color: #f1f1f1;
+      color: #333;
+      border-bottom-left-radius: 8px;
+    }
+
+    .chatbox-footer {
+      display: flex;
+      padding: 16px;
+      background-color: #f9f9f9;
+      border-top: 1px solid #eee;
+    }
+
+    .chatbox-input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 24px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .chatbox-input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    }
+
+    .chatbox-button {
+      margin-left: 10px;
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .chatbox-button:hover {
+      background-color: #218838;
+    }
   </style>
 </head>
 <body>
 
 <div class="chatbox-container">
-  <div class="chatbox-header">AI 聊天机器人</div>
+  <div class="chatbox-header">AI 聊天助手</div>
   <div class="chatbox-body" id="chatBody">
-    <div class="message bot-message">你好！我是AI助手，有什么问题我可以帮你？</div>
+    <div class="message bot-message">你好！我是 AI 助手，有什么问题我可以帮你？</div>
   </div>
   <div class="chatbox-footer">
     <input type="text" id="userInput" class="chatbox-input" placeholder="输入消息..." />
