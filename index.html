@@ -148,29 +148,12 @@
     scrollToBottom();
 
     try {
-      const response = await fetch("https://api.siliconflow.cn/v1/chat/completions ", {
+      const response = await fetch("http://123.60.128.213:5000/chat", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer YOUR_API_TOKEN_HERE", // 替换为你的 Token
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          model: "Qwen/QwQ-32B",
-          messages: [{ role: "user", content: message }],
-          stream: false,
-          max_tokens: 512,
-          enable_thinking: false,
-          thinking_budget: 4096,
-          min_p: 0.05,
-          stop: null,
-          temperature: 0.7,
-          top_p: 0.7,
-          top_k: 50,
-          frequency_penalty: 0.5,
-          n: 1,
-          response_format: { type: "text" },
-          tools: []
-        })
+        body: JSON.stringify({ message })
       });
 
       const data = await response.json();
@@ -178,7 +161,7 @@
       // 显示模型回复
       const botMsg = document.createElement("div");
       botMsg.className = "message bot-message";
-      botMsg.textContent = data.choices?.[0]?.message?.content || "抱歉，没有收到有效回答。";
+      botMsg.textContent = data.reply || "抱歉，没有收到有效回答。";
       document.getElementById("chatBody").appendChild(botMsg);
 
     } catch (error) {
@@ -205,6 +188,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
